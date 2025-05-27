@@ -5,7 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
 
-    String baseUrl = "http://localhost/quiz/";
+    // Always use 10.0.2.2 to connect emulator to the host's server
+    String baseUrl = "http://10.0.2.2/quiz/";
 
     // Create and Return a configured Retrofit Instance
     public Retrofit getRetrofitInstance(){

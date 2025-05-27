@@ -1,6 +1,9 @@
 package com.arsoft.thequizapp;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
         displayFirstQuestion();
 
 
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayNextQuestions();
+            }
+        });
 
 
     }
@@ -69,6 +78,70 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void displayNextQuestions(){
+
+        // Direct the user to the Results activity
+
+
+        // Displaying the question
+        int selectedOption = binding.radioGroup.getCheckedRadioButtonId();
+        if (selectedOption != -1){
+            RadioButton radioButton = findViewById(selectedOption);
+
+            // More Questions to Display??
+            if((questionsList.size() - i) > 0){
+                // Getting the number of questions
+                totalQuestions = questionsList.size();
+
+                // Check if the radio button is correct
+                if (radioButton.getText().toString().equals(
+                        questionsList.get(i).getCorrectOption()
+                )){
+                    result++;
+                    binding.txtResult.setText("Correct Answers: "+result);
+
+                }
+                if (i == 0){
+                    i++;
+                }
+
+                // Displaying the next Questions
+                binding.txtQuestion.setText("Question "+(i+1)+" : "
+                +questionsList.get(i).getQuestion());
+                binding.radio1.setText(questionsList.get(i).getOption1());
+                binding.radio2.setText(questionsList.get(i).getOption2());
+                binding.radio3.setText(questionsList.get(i).getOption3());
+                binding.radio4.setText(questionsList.get(i).getOption4());
+
+
+                // Check if it is the last question
+                if (i == (questionsList.size() -1)){
+                    binding.btnNext.setText("Finish");
+                }
+                binding.radioGroup.clearCheck();
+                i++;
+
+
+            }else {
+                if (radioButton.getText().toString().equals(
+                        questionsList.get(i - 1).getCorrectOption()
+                )){
+                    result++;
+                    binding.txtResult.setText("Correct Answers : "+ result);
+                }
+            }
+
+
+        }else {
+            Toast.makeText(this,
+                    "You need to make a selection",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+
     }
 
 }
