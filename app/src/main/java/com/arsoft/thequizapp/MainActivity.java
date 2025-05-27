@@ -1,5 +1,6 @@
 package com.arsoft.thequizapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
@@ -83,7 +84,11 @@ public class MainActivity extends AppCompatActivity {
     public void displayNextQuestions(){
 
         // Direct the user to the Results activity
-
+        if (binding.btnNext.getText().equals("Finish")){
+            Intent i = new Intent(getApplicationContext(), ResultActivity.class);
+            startActivity(i);
+            finish();
+        }
 
         // Displaying the question
         int selectedOption = binding.radioGroup.getCheckedRadioButtonId();
